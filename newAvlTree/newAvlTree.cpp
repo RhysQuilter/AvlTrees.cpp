@@ -1,7 +1,3 @@
-// AVL Tree.cpp : Defines the entry point for the console application.
-//
-
-
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -17,7 +13,17 @@ const int Exit = 9;
 const int SearchTree = 4;
 const int DeleteNode = 5;
 
+AVLtree<string> avl;
 
+
+void PrintMenu();
+int main();
+void InitializeAvlTree();
+void DeleteItem();
+void TreeSearch();
+void PrintAVLTree();
+void InsertTree();
+void InValidOption();
 
 void PrintMenu() {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n"; //adding new lines to place the menu in the center of the cmd promt
@@ -35,7 +41,6 @@ void InValidOption()//start of error handling
 	PrintMenu();//prints menu to screen if an invalid option is inserted
 }
 
-AVLtree<string> avl;
 
 void InsertTree()//start of tree insert
 {
@@ -54,7 +59,7 @@ void InsertTree()//start of tree insert
 
 }//end of tree insert
 
-void PrintAVLTree() 
+void PrintAVLTree()
 {
 	cout << "PrintAVLTree" << endl;
 	cout << "AVL TREE";
@@ -74,7 +79,7 @@ void TreeSearch()
 			avl.PrintTree();
 			avl.Contains(item);
 		}
-	} while (item !="9");
+	} while (item != "9");
 }
 
 
@@ -110,7 +115,15 @@ void DeleteItem()
 
 void InitializeAvlTree()
 {
-	
+	avl.InsertItem("Tom");
+	avl.InsertItem("Ursula");
+	avl.InsertItem("Mary");
+	avl.InsertItem("Zaki");
+	avl.InsertItem("Tim");
+	avl.InsertItem("Amy");
+
+
+
 }
 
 
@@ -130,46 +143,36 @@ int main()
 
 		switch (Selection) // start of switch statement for the menu selection
 		{
-		case 
-		PrintTree:
-			
+		case PrintTree:
+
 			PrintAVLTree();
 			break;
 
-		case
-		Insert:
+		case Insert:
 
 			InsertTree();
 			break;
-		case 
-		PrintMenuSelection:
+
+		case PrintMenuSelection:
 
 			PrintMenu();
-		case
-		SearchTree:
+
+		case SearchTree:
 
 			TreeSearch();
 			break;
 
-			case
-			DeleteNode:
+		case DeleteNode:
 
 			DeleteItem();
 			break;
 
-		case 
-		Exit:
-
+		case Exit:
 			run = false;
 			break;
 		default:
-
 			InValidOption();
 			break;
-		} // end of switch statement.
-
-
-		//The Progam
+		}
 	} while (run);
-
 }
