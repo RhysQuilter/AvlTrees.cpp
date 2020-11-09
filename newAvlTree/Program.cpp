@@ -12,8 +12,9 @@ const int PrintMenuSelection = 3;
 const int Exit = 9;
 const int SearchTree = 4;
 const int DeleteNode = 5;
+const int Clear = 6;
 
-AVLtree<string> avl;
+AvlTree<string> avl;
 
 
 void PrintMenu();
@@ -24,21 +25,29 @@ void TreeSearch();
 void PrintAVLTree();
 void InsertTree();
 void InValidOption();
+void ClearTree();
 
 void PrintMenu() {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n"; //adding new lines to place the menu in the center of the cmd promt
-	cout << " \t\t\t\tType" << Insert << " Please insert an item into the AVL Tree." << endl;
-	cout << " \t\t\t\tType" << PrintTree << " to print the inserted items into the AVL Tree." << endl;
-	cout << " \t\t\t\tType" << PrintMenuSelection << " to Print the Menu to the screen." << endl;
-	cout << " \t\t\t\tType" << SearchTree << " To search for an Item withen the AVL Tree." << endl;
-	cout << " \t\t\t\tType" << DeleteNode << " To select the Item that you wish to delete" << endl;
-	cout << " \t\t\t\tType" << Exit << " To Exit the program." << endl;
+	cout << " \t\t\t\tType " << Insert << " Please insert an item into the AVL Tree." << endl;
+	cout << " \t\t\t\tType " << PrintTree << " to print the inserted items into the AVL Tree." << endl;
+	cout << " \t\t\t\tType " << PrintMenuSelection << " to Print the Menu to the screen." << endl;
+	cout << " \t\t\t\tType " << SearchTree << " To search for an Item withen the AVL Tree." << endl;
+	cout << " \t\t\t\tType " << DeleteNode << " To select the Item that you wish to delete" << endl;
+	cout << " \t\t\t\tType " << Exit << " To Exit the program." << endl;
+	cout << " \t\t\t\tType " << Clear << " To Clear the program." << endl;
 
 } //end of menu
 void InValidOption()//start of error handling  
 {
 	cout << " \n  *** Invalid option entered please enter a valid option to proceed *** \n " << endl;
 	PrintMenu();//prints menu to screen if an invalid option is inserted
+}
+
+void ClearTree()
+{
+	avl.Clear();
+	cout << " tree has been cleared.." << endl;
 }
 
 
@@ -52,18 +61,20 @@ void InsertTree()//start of tree insert
 		if (item != "9") // if statement to loop the promt to input name untill 9 is selected
 		{
 			cout << " \n  Names that have been added to tree... \n " << item << endl;
-			avl.InsertItem(item);//inserting name 
+			avl.Insert(item);//inserting name 
 			cout << "\n Item has been added\n ";
 		}
 	} while (item != "9");
 
 }//end of tree insert
 
+
 void PrintAVLTree()
+
 {
 	cout << "PrintAVLTree" << endl;
 	cout << "AVL TREE";
-	avl.PrintTree();
+	cout << avl.ToString();
 }
 
 void TreeSearch()
@@ -76,7 +87,7 @@ void TreeSearch()
 		if (item != "9")// if statement to loop the promt to input name untill 9 is selected
 		{
 			cout << " Searching for " << item << " in tree " << endl; //searching to see if item in the avl tree exists..
-			avl.PrintTree();
+			cout << avl.ToString();
 			avl.Contains(item);
 		}
 	} while (item != "9");
@@ -90,19 +101,20 @@ void DeleteItem()
 	{
 		cout << "\n please enter the item you want to delete OR press 9 to cancel \n";
 		cin >> item;//taking user input from keyboard
-		avl.Contains(item);//checking to see if item entered is contained in avl tree
-
-		if (Located == true)//if statement runs if item is found
+		bool found = avl.Contains(item);//checking to see if item entered is contained in avl tree
+		
+		
+		if ( found)//if statement runs if item is found
 		{
 			cout << "\n item now being deleted... \n" << item << endl;
-			avl.DeleteItem(item);//item gets deleted from tree
+			avl.Remove(item);//item gets deleted from tree
 		}
-		else if (Located == false)
+		else// if(false)
 		{
 			cout << item << "\n could not delete item as item not found in the tree...\n " << endl;//if item is not in tree error message displays
 		}
 
-		avl.PrintTree();
+	 cout << avl.ToString() << endl;
 	} while (item != "9");//keeps looping until 9 is selected.
 
 
@@ -115,12 +127,12 @@ void DeleteItem()
 
 void InitializeAvlTree()
 {
-	avl.InsertItem("Tom");
-	avl.InsertItem("Ursula");
-	avl.InsertItem("Mary");
-	avl.InsertItem("Zaki");
-	avl.InsertItem("Tim");
-	avl.InsertItem("Amy");
+	avl.Insert("Tom");
+	avl.Insert("Ursula");
+	avl.Insert("Mary");
+	avl.Insert("Zaki");
+	avl.Insert("Tim");
+	avl.Insert("Amy");
 
 
 
@@ -139,6 +151,7 @@ int main()
 	InitializeAvlTree();
 	do
 	{
+		cout << "Enter Menu Selction (Type " << PrintMenuSelection << " to see menu options)" << endl;
 		cin >> Selection;
 
 		switch (Selection) // start of switch statement for the menu selection
@@ -165,6 +178,11 @@ int main()
 		case DeleteNode:
 
 			DeleteItem();
+			break;
+
+		case Clear:
+
+			ClearTree();
 			break;
 
 		case Exit:
