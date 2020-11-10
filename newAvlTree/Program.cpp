@@ -12,7 +12,7 @@ const int PrintMenuSelection = 3;
 const int Exit = 9;
 const int SearchTree = 4;
 const int DeleteNode = 5;
-const int Clear = 6;
+
 
 AvlTree<string> avl;
 
@@ -25,7 +25,7 @@ void TreeSearch();
 void PrintAVLTree();
 void InsertTree();
 void InValidOption();
-void ClearTree();
+
 
 void PrintMenu() {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n"; //adding new lines to place the menu in the center of the cmd promt
@@ -35,7 +35,7 @@ void PrintMenu() {
 	cout << " \t\t\t\tType " << SearchTree << " To search for an Item withen the AVL Tree." << endl;
 	cout << " \t\t\t\tType " << DeleteNode << " To select the Item that you wish to delete" << endl;
 	cout << " \t\t\t\tType " << Exit << " To Exit the program." << endl;
-	cout << " \t\t\t\tType " << Clear << " To Clear the program." << endl;
+
 
 } //end of menu
 void InValidOption()//start of error handling  
@@ -44,11 +44,7 @@ void InValidOption()//start of error handling
 	PrintMenu();//prints menu to screen if an invalid option is inserted
 }
 
-void ClearTree()
-{
-	avl.Clear();
-	cout << " tree has been cleared.." << endl;
-}
+
 
 
 void InsertTree()//start of tree insert
@@ -60,9 +56,10 @@ void InsertTree()//start of tree insert
 		cin >> item;//taking user input from keyboard
 		if (item != "9") // if statement to loop the promt to input name untill 9 is selected
 		{
-			cout << " \n  Names that have been added to tree... \n " << item << endl;
+			//cout << " \n  Adding names to the tree to tree... \n " << item << endl;
 			avl.Insert(item);//inserting name 
-			cout << "\n Item has been added\n ";
+			cout << "\n";
+			cout << item << " has been added\n ";
 		}
 	} while (item != "9");
 
@@ -87,8 +84,11 @@ void TreeSearch()
 		if (item != "9")// if statement to loop the promt to input name untill 9 is selected
 		{
 			cout << " Searching for " << item << " in tree " << endl; //searching to see if item in the avl tree exists..
+			if (avl.Contains(item))//if statement runs if item is found
+				cout << "\n " << item << " is in the tree... \n" << item << endl;
+			else// if(false)
+				cout << "\n" << item << " is not in the tree...\n " << endl;//if item is not in tree error message displays
 			cout << avl.ToString();
-			avl.Contains(item);
 		}
 	} while (item != "9");
 }
@@ -101,20 +101,15 @@ void DeleteItem()
 	{
 		cout << "\n please enter the item you want to delete OR press 9 to cancel \n";
 		cin >> item;//taking user input from keyboard
-		bool found = avl.Contains(item);//checking to see if item entered is contained in avl tree
-		
-		
-		if ( found)//if statement runs if item is found
-		{
-			cout << "\n item now being deleted... \n" << item << endl;
-			avl.Remove(item);//item gets deleted from tree
-		}
-		else// if(false)
-		{
-			cout << item << "\n could not delete item as item not found in the tree...\n " << endl;//if item is not in tree error message displays
-		}
+		bool itemDeleted = avl.Remove(item);//checking to see if item entered is contained in avl tree
 
-	 cout << avl.ToString() << endl;
+
+		if (itemDeleted)//if statement runs if item is found
+			cout << "\n item now being deleted... \n" << item << endl;
+		else// if(false)
+			cout << "\n" << item << " could not delete item as item not found in the tree...\n " << endl;//if item is not in tree error message displays
+
+		cout << avl.ToString() << endl;
 	} while (item != "9");//keeps looping until 9 is selected.
 
 
@@ -127,12 +122,12 @@ void DeleteItem()
 
 void InitializeAvlTree()
 {
-	avl.Insert("Tom");
+	/*avl.Insert("Tom");
 	avl.Insert("Ursula");
 	avl.Insert("Mary");
 	avl.Insert("Zaki");
 	avl.Insert("Tim");
-	avl.Insert("Amy");
+	avl.Insert("Amy");*/
 
 
 
@@ -151,7 +146,7 @@ int main()
 	InitializeAvlTree();
 	do
 	{
-		cout << "Enter Menu Selction (Type " << PrintMenuSelection << " to see menu options)" << endl;
+		//cout << "\t\t\t\tEnter Menu Selction (Type " << PrintMenuSelection << " to see menu options)" << endl;
 		cin >> Selection;
 
 		switch (Selection) // start of switch statement for the menu selection
@@ -180,14 +175,10 @@ int main()
 			DeleteItem();
 			break;
 
-		case Clear:
-
-			ClearTree();
-			break;
-
 		case Exit:
 			run = false;
 			break;
+
 		default:
 			InValidOption();
 			break;
